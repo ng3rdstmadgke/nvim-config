@@ -32,3 +32,16 @@ vim.api.nvim_create_autocmd("VimEnter", {
     end
   end,
 })
+
+-- netrw は <C-l> (再読み込み) をバッファ内で上書きするので、境界を動かすキーに戻す
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup,
+  pattern = "netrw",
+  callback = function(args)
+    vim.schedule(function()
+      if vim.api.nvim_buf_is_valid(args.buf) then
+        vim.keymap.set("n", "<C-l>", function() require("config.window").move_border("l") end, { buffer = args.buf, desc = "ペインの境界を右へ動かす" })
+      end
+    end)
+  end,
+})
