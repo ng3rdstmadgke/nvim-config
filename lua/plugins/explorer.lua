@@ -2,7 +2,8 @@ return {
   "nvim-tree/nvim-tree.lua",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   keys = {
-    { "<Leader>e", "<Cmd>NvimTreeToggle<CR>", desc = "エクスプローラ" },
+    { "<Leader>e", "<Cmd>NvimTreeFocus<CR>", desc = "エクスプローラを開く/フォーカス" },
+    { "<Leader>m", "<Cmd>NvimTreeClose<CR>", desc = "エクスプローラを閉じる" },
     { "<Leader>E", "<Cmd>NvimTreeFindFile<CR>", desc = "エクスプローラで現在のファイルを表示" },
   },
   -- ツリー内: <CR> で開く, <C-t> 新しいタブ, <C-v> 縦分割, <C-x> 横分割, a 作成, d 削除, r 名前変更, g? ヘルプ
