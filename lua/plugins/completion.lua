@@ -8,7 +8,10 @@ return {
       preset = "default",
       ["<C-k>"] = { "fallback" }, -- インサートモードの <C-k> (上移動) を優先する
     },
-    completion = { documentation = { auto_show = true } },
+    completion = {
+      documentation = { auto_show = true },
+      menu = { draw = { columns = { { "label", "label_description", gap = 1 }, { "kind" } } } },
+    },
     cmdline = { enabled = true },
   },
 }

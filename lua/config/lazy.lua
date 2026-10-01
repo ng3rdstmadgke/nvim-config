@@ -13,6 +13,13 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   spec = { { import = "plugins" } },
   install = { colorscheme = { "tokyonight" } },
+  ui = {
+    icons = {
+      cmd = "> ", config = "* ", event = "* ", favorite = "* ", ft = "* ", init = "* ",
+      import = "* ", keys = "* ", lazy = "z ", plugin = "* ", runtime = "* ", require = "* ",
+      source = "* ", start = "* ",
+    },
+  },
   checker = { enabled = false },
   change_detection = { notify = false },
 })

@@ -3,6 +3,7 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   cmd = "FzfLua",
   opts = {
+    file_icons = false, -- Nerd Font が無い環境なのでアイコンを使わない
     files = { hidden = true },
     grep = { hidden = true },
   },
