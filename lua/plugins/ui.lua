@@ -20,7 +20,7 @@ return {
       },
       sections = {
         lualine_c = { { "filename", path = 1 } },
-        lualine_x = { "diagnostics", "encoding", "fileformat", "filetype" },
+        lualine_x = { "encoding", "fileformat", "filetype" },
         lualine_z = { "location" },
       },
       -- 複数タブの管理: タブ番号とファイル名を表示する
