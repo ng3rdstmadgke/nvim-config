@@ -14,6 +14,7 @@ lua/plugins/             プラグイン別の設定
   lsp.lua                LSP (mason で自動インストール), 診断表示
   completion.lua         補完 (blink.cmp)
   format.lua             整形 (conform.nvim)
+  git.lua                Git の差分表示 (gitsigns.nvim)
   fzf.lua                ファイル検索 / rg による内容検索 (fzf-lua)
 ```
 
@@ -124,6 +125,11 @@ LSP サーバーは mason が入れます。初回起動後、`:Mason` で導入
 | `grn` / `gra` | 名前変更 / コードアクション |
 | `]d` / `[d` | 次 / 前の診断 |
 | `<Leader>cf` | 整形 |
+| `]c` / `[c` | 次 / 前の変更箇所 (Git) |
+| `<Leader>gi` | 変更箇所の差分をファイル内に表示 |
+| `<Leader>gp` | 変更箇所の差分をポップアップで表示 |
+| `<Leader>gd` | 最後のコミットとの差分を左右に並べて表示 |
+| `<Leader>gb` | カーソル行の blame |
 | `<Leader>w` / `q` | 保存 / 閉じる |
 
 ファイルピッカー (fzf-lua) の中では `<C-t>` でタブ、`<C-v>` で縦分割、`<C-s>` で横分割に開けます。

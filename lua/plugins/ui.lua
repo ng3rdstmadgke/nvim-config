@@ -78,6 +78,7 @@ return {
       spec = {
         { "<Leader>f", group = "検索 (fzf)" },
         { "<Leader>c", group = "コード" },
+        { "<Leader>g", group = "Git" },
       },
     },
   },
