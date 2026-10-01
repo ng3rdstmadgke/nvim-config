@@ -59,7 +59,7 @@ tree-sitter --version
 ### 4. 設定を適用する
 
 ```bash
-git clone <このリポジトリのURL> ~/.config/nvim
+git clone https://github.com/ng3rdstmadgke/nvim-config.git ~/.config/nvim
 nvim
 ```
 
@@ -69,11 +69,17 @@ nvim
 mv ~/.config/nvim ~/.config/nvim.bak
 ```
 
-初回起動時に lazy.nvim が自動でプラグインを取得し、treesitter のパーサーをビルドします。完了するまで数分かかります。
+初回起動時に、次のものが自動で入ります。完了まで数分かかります。
 
-### 5. LSP を入れる
+- プラグイン (lazy.nvim)
+- treesitter のパーサー (ビルド)
+- LSP サーバー、整形ツール (mason)
 
-LSP サーバーは mason が入れます。初回起動後、`:Mason` で導入状況を確認してください。入っていない場合は、次を実行します。
+途中で `-- More --` と出て入力待ちになったら、`q` か `<Enter>` を押して進めてください。Lazy の画面が出たら `q` で閉じられます (裏でインストールは続きます)。
+
+### 5. インストール状況を確認する
+
+LSP サーバーと整形ツールは、手順 4 の初回起動で mason が自動で入れます。`:Mason` で導入状況を確認してください。入っていないものがある場合 (ネットワーク断などで失敗した場合) は、次を実行します。
 
 ```vim
 :LspInstall
@@ -111,6 +117,8 @@ LSP サーバーは mason が入れます。初回起動後、`:Mason` で導入
 | `<Leader>fw` | カーソル下の単語を検索 |
 | `<Leader>fb` / `fo` | バッファ / 最近開いたファイル |
 | `<Leader>fd` | 診断一覧 |
+| `<Leader>s` / `d` | 横 / 縦に分割 (新しいペインはエクスプローラで開く) |
+| `<Leader>h` / `j` / `k` / `l` | ペイン間の移動 |
 | `<Leader>e` | エクスプローラを開く (プロジェクトルート) |
 | `<Leader>E` | エクスプローラを開く (現在のファイルのディレクトリ) |
 | `<Leader>m` | エクスプローラを閉じて、直前のバッファへ戻る |
