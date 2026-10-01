@@ -77,3 +77,13 @@ map("n", "<Leader>W", "<Cmd>w<CR>", { desc = "保存" })
 map("n", "<Leader>q", "<Cmd>q<CR>", { desc = "閉じる" })
 map("n", "<Leader>o", "<Cmd>qa!<CR>", { desc = "保存せずに全て終了" })
 map("n", "<Esc>", "<Cmd>nohlsearch<CR>", { desc = "検索ハイライトを消す" })
+-- 端末モードから Normal モードへ戻る
+map("t", "<Esc>", "<C-\\><C-n>", { desc = "端末モードを抜ける" })
+-- <C-{> を区別して送れる端末向け (送れない端末では <C-{> が <Esc> と同じ信号になるので上のマップで戻れる)
+map("t", "<C-{>", "<C-\\><C-n>", { desc = "端末モードを抜ける" })
+-- 画面下部に端末を開いて、そのまま入力できる状態にする
+map("n", "<Leader>i", function()
+  vim.cmd("botright 15split | terminal")
+  vim.wo.number = false
+  vim.cmd("startinsert")
+end, { desc = "ターミナルを開く" })
