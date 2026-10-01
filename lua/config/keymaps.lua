@@ -32,8 +32,8 @@ map("n", "<C-Left>", "<C-w><")
 map("n", "<C-Up>", "<C-w>+")
 map("n", "<C-Down>", "<C-w>-")
 map("n", "<Leader>=", "<C-w>=")
-map("n", "<Leader>-", "<Cmd>split<CR>", { desc = "横に分割" })
-map("n", "<Leader>|", "<Cmd>vsplit<CR>", { desc = "縦に分割" })
+map("n", "<Leader>s", "<Cmd>split<CR>", { desc = "横に分割" })
+map("n", "<Leader>d", "<Cmd>vsplit<CR>", { desc = "縦に分割" })
 
 -- === タブ ===
 map("n", "<Leader>t", "<Cmd>tabnew<CR>", { desc = "新しいタブ" })
