@@ -92,7 +92,7 @@ LSP サーバーは mason が入れます。初回起動後、`:Mason` で導入
 
 ## 補足
 
-- **フォント:** ツリーやステータスラインのアイコンには Nerd Font が必要です。ターミナル側のフォントを Nerd Font にしてください。
+- **アイコン:** Nerd Font が無い環境でも表示が崩れないよう、アイコンは無効にしています (nvim-tree, lualine, fzf-lua, which-key, blink.cmp, Lazy)。Nerd Font を使う場合は、各設定の `icons` 関連オプションを戻してください。
 - **Rust / Go:** rust_analyzer と gopls が動くには `cargo` / `go` が必要です。`go` が無い環境では gopls を自動で除外します。
 - **Makefile:** ハイライトのみで、静的解析は対応していません。
 - **macOS:** `brew install neovim tree-sitter-cli ripgrep fzf` で、手順 2 と 3 の代わりになります。
