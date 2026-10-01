@@ -16,12 +16,20 @@ return {
         component_separators = "|",
         section_separators = "",
         always_show_tabline = false, -- タブが1つのときはタブラインを隠す
-        globalstatus = false, -- 分割した各ウィンドウにファイル名を表示する
+        globalstatus = true, -- ステータスラインは画面全体で1本にする
+        disabled_filetypes = { winbar = { "NvimTree" } },
       },
       sections = {
-        lualine_c = { { "filename", path = 1 } },
+        lualine_c = {},
         lualine_x = { "encoding", "fileformat", "filetype" },
         lualine_z = { "location" },
+      },
+      -- ファイル名は各ウィンドウの上端 (winbar) に表示する
+      winbar = {
+        lualine_c = { { "filename", path = 1 } },
+      },
+      inactive_winbar = {
+        lualine_c = { { "filename", path = 1 } },
       },
       -- 複数タブの管理: タブ番号とファイル名を表示する
       tabline = {
