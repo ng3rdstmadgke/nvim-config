@@ -84,7 +84,24 @@ return {
           local function map(lhs, rhs, desc)
             vim.keymap.set("n", lhs, rhs, { buffer = args.buf, desc = desc })
           end
-          map("gd", vim.lsp.buf.definition, "定義へ移動")
+          map('<Leader>"', vim.lsp.buf.definition, "定義へ移動")
+          map("<Leader>#", function()
+            -- 定義元を縦分割で開く。定義が無いときは分割しない
+            vim.lsp.buf.definition({
+              on_list = function(res)
+                local items = res.items
+                if #items == 0 then
+                  return
+                end
+                vim.cmd("vsplit " .. vim.fn.fnameescape(items[1].filename))
+                vim.api.nvim_win_set_cursor(0, { items[1].lnum, items[1].col - 1 })
+                if #items > 1 then
+                  vim.fn.setqflist({}, " ", res)
+                  vim.cmd("copen")
+                end
+              end,
+            })
+          end, "定義元を縦分割で表示")
           map("gD", vim.lsp.buf.declaration, "宣言へ移動")
           map("<Leader>cd", vim.diagnostic.open_float, "診断の詳細")
           map("<Leader>cr", vim.lsp.buf.rename, "名前変更")
