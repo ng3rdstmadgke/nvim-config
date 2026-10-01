@@ -28,6 +28,10 @@ opt.ignorecase = true
 opt.smartcase = true                   -- 大文字が入っているときは区別する
 opt.inccommand = "split"               -- :%s の結果をリアルタイムに表示する
 
+-- === エクスプローラ (netrw) ===
+vim.g.netrw_liststyle = 3              -- ツリー表示
+vim.g.netrw_banner = 0                 -- 上部のバナーを消す
+
 -- === 折りたたみ (treesitter) ===
 opt.foldlevelstart = 99                -- 開いた時点では折りたたまない
 

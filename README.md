@@ -7,7 +7,7 @@ Neovim 0.12 以降向けの設定です。プラグイン管理は lazy.nvim、�
 ```
 init.lua                 エントリポイント
 lazy-lock.json           プラグインのバージョン固定
-lua/config/              基本設定 (options / keymaps / autocmds / lazy)
+lua/config/              基本設定 (options / keymaps / autocmds / lazy / explorer)
 lua/plugins/             プラグイン別の設定
   ui.lua                 テーマ, lualine (タブ表示), which-key, autopairs
   treesitter.lua         シンタックスハイライト, 折りたたみ, 閉じタグ補完
@@ -15,7 +15,6 @@ lua/plugins/             プラグイン別の設定
   completion.lua         補完 (blink.cmp)
   format.lua             整形 (conform.nvim)
   fzf.lua                ファイル検索 / rg による内容検索 (fzf-lua)
-  explorer.lua           ファイルツリー (nvim-tree)
 ```
 
 ## セットアップ手順 (Linux x86_64 / Ubuntu)
@@ -92,9 +91,10 @@ LSP サーバーは mason が入れます。初回起動後、`:Mason` で導入
 
 ## 補足
 
-- **アイコン:** Nerd Font が無い環境でも表示が崩れないよう、アイコンは無効にしています (nvim-tree, lualine, fzf-lua, which-key, blink.cmp, Lazy)。Nerd Font を使う場合は、各設定の `icons` 関連オプションを戻してください。
+- **アイコン:** Nerd Font が無い環境でも表示が崩れないよう、アイコンは無効にしています (lualine, fzf-lua, which-key, blink.cmp, Lazy)。Nerd Font を使う場合は、各設定の `icons` 関連オプションを戻してください。
 - **Rust / Go:** rust_analyzer と gopls が動くには `cargo` / `go` が必要です。`go` が無い環境では gopls を自動で除外します。
 - **Makefile:** ハイライトのみで、静的解析は対応していません。
+- **ripgrep:** `rg` は実行ファイルとして `PATH` に必要です (シェルの関数や alias では Neovim から見えません)。無い場合、fzf-lua は `find` / `grep` で動き、`.gitignore` が効きません。apt に無い環境では、[公式リリース](https://github.com/BurntSushi/ripgrep/releases) のバイナリを `~/.local/bin` に置いてください。
 - **macOS:** `brew install neovim tree-sitter-cli ripgrep fzf` で、手順 2 と 3 の代わりになります。
 - **更新:** プラグインの更新は `:Lazy update` です。更新後は `lazy-lock.json` をコミットしてください。
 
@@ -104,15 +104,15 @@ LSP サーバーは mason が入れます。初回起動後、`:Mason` で導入
 
 | キー | 動作 |
 |---|---|
-| `<Leader>ff` | ファイル名で検索 |
-| `<Leader>fg` | rg で内容検索 |
-| `<Leader>fG` | rg で内容検索 (.gitignore を無視) |
+| `<Leader>ff` | ファイル名で検索 (.gitignore の対象は除外) |
+| `<Leader>fg` | rg で内容検索 (.gitignore の対象は除外) |
+| `<Leader>fG` | rg で内容検索 (.gitignore を無視。`.git/` の中は除く) |
 | `<Leader>fw` | カーソル下の単語を検索 |
 | `<Leader>fb` / `fo` | バッファ / 最近開いたファイル |
 | `<Leader>fd` | 診断一覧 |
-| `<Leader>e` | ファイルツリーを開く (開いていればフォーカス) |
-| `<Leader>E` | ファイルツリーで現在のファイルを表示 |
-| `<Leader>m` | ファイルツリーを閉じる |
+| `<Leader>e` | エクスプローラを開く (プロジェクトルート) |
+| `<Leader>E` | エクスプローラを開く (現在のファイルのディレクトリ) |
+| `<Leader>m` | エクスプローラを閉じて、直前のバッファへ戻る |
 | `<Leader>t` | 新しいタブ |
 | `<Leader>n` / `p` | 次 / 前のタブ |
 | `<Leader>1`〜`9` | 番号でタブへ移動 |
@@ -126,4 +126,8 @@ LSP サーバーは mason が入れます。初回起動後、`:Mason` で導入
 | `<Leader>w` / `q` | 保存 / 閉じる |
 
 ファイルピッカー (fzf-lua) の中では `<C-t>` でタブ、`<C-v>` で縦分割、`<C-s>` で横分割に開けます。
-ファイルツリー内では `<CR>` で開く、`<C-t>` で新しいタブ、`a` で作成、`d` で削除、`r` で名前変更、`g?` でヘルプです。
+エクスプローラは Neovim 標準の netrw をツリー表示で使っています。今のウィンドウにそのまま開き (プロジェクトルート = Git のルート。無ければカレントディレクトリ)、複数のウィンドウで同時に開けます (同じバッファを表示するため、フォルダの展開状態は共有されます)。`nvim` の起動時と、`<Leader>s`/`<Leader>d`/`<Leader>t` で作る新しいウィンドウ・タブでも開きます。
+
+- `<CR>` ファイルを今のウィンドウで開く / フォルダを展開、`-` 親ディレクトリ
+- `v` 縦分割、`o` 横分割、`t` 新しいタブで開く
+- `%` ファイル作成、`d` フォルダ作成、`R` 名前変更、`D` 削除、`<F1>` ヘルプ

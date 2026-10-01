@@ -32,11 +32,26 @@ map("n", "<C-Left>", "<C-w><")
 map("n", "<C-Up>", "<C-w>+")
 map("n", "<C-Down>", "<C-w>-")
 map("n", "<Leader>=", "<C-w>=")
-map("n", "<Leader>s", "<Cmd>split<CR>", { desc = "横に分割" })
-map("n", "<Leader>d", "<Cmd>vsplit<CR>", { desc = "縦に分割" })
+-- === エクスプローラ (netrw) ===
+map("n", "<Leader>e", function() require("config.explorer").open() end, { desc = "エクスプローラ (プロジェクトルート)" })
+map("n", "<Leader>E", function() require("config.explorer").open_file_dir() end, { desc = "エクスプローラ (現在のファイルのディレクトリ)" })
+map("n", "<Leader>m", function()
+  -- エクスプローラを閉じて、直前のバッファへ戻る
+  if vim.bo.filetype == "netrw" and vim.fn.buflisted(vim.fn.bufnr("#")) == 1 then
+    vim.cmd("buffer #")
+  end
+end, { desc = "エクスプローラを閉じて元のバッファへ戻る" })
+
+-- 新しいウィンドウ/タブは、エクスプローラで開く
+local function new_window(cmd)
+  vim.cmd(cmd)
+  require("config.explorer").open()
+end
+map("n", "<Leader>s", function() new_window("split") end, { desc = "横に分割" })
+map("n", "<Leader>d", function() new_window("vsplit") end, { desc = "縦に分割" })
 
 -- === タブ ===
-map("n", "<Leader>t", "<Cmd>tabnew<CR>", { desc = "新しいタブ" })
+map("n", "<Leader>t", function() new_window("tabnew") end, { desc = "新しいタブ" })
 map("n", "<Leader>n", "gt", { desc = "次のタブ" })
 map("n", "<Leader>p", "gT", { desc = "前のタブ" })
 map("n", "<Leader>>", "<Cmd>tabmove +1<CR>", { desc = "タブを右へ移動" })

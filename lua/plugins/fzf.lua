@@ -3,15 +3,25 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   cmd = "FzfLua",
   opts = {
-    file_icons = false, -- Nerd Font が無い環境なのでアイコンを使わない
+    defaults = { file_icons = false }, -- Nerd Font が無い環境なのでアイコンを使わない
     files = { hidden = true },
     grep = { hidden = true },
   },
-  -- ファイル一覧の中では <C-t> でタブ, <C-v> で縦分割, <C-s> で横分割に開ける
+  -- <Leader>ff は .gitignore を適用する。ファイル一覧の中では <C-t> でタブ, <C-v> で縦分割, <C-s> で横分割に開ける
   keys = {
     { "<Leader>ff", function() require("fzf-lua").files() end, desc = "ファイル検索" },
-    { "<Leader>fg", function() require("fzf-lua").live_grep() end, desc = "内容検索 (rg)" },
-    { "<Leader>fG", function() require("fzf-lua").live_grep({ no_ignore = true }) end, desc = "内容検索 (rg, .gitignore無視)" },
+    { "<Leader>fg", function() require("fzf-lua").live_grep() end, desc = "内容検索 (rg, .gitignore適用)" },
+    -- .gitignore を無視して検索する (.git/ の中身だけは除く)
+    {
+      "<Leader>fG",
+      function()
+        require("fzf-lua").live_grep({
+          no_ignore = true,
+          rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --glob=!.git/ -e",
+        })
+      end,
+      desc = "内容検索 (rg, .gitignore無視)",
+    },
     { "<Leader>fw", function() require("fzf-lua").grep_cword() end, desc = "カーソル下の単語を検索" },
     { "<Leader>fw", function() require("fzf-lua").grep_visual() end, mode = "v", desc = "選択範囲を検索" },
     { "<Leader>fb", function() require("fzf-lua").buffers() end, desc = "バッファ" },

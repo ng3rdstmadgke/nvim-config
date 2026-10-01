@@ -18,3 +18,17 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "css", "scss", "html", "vue", "yaml" },
   callback = function() vim.opt_local.iskeyword:append("-") end,
 })
+
+-- 引数なしで起動したときは、エクスプローラを初期画面にする
+-- (ディレクトリを指定した場合は netrw が自動で開くので、cwd だけ合わせる)
+vim.api.nvim_create_autocmd("VimEnter", {
+  group = augroup,
+  nested = true,
+  callback = function()
+    if vim.fn.argc() == 0 and vim.api.nvim_buf_get_name(0) == "" and vim.bo.buftype == "" then
+      require("config.explorer").open()
+    elseif vim.fn.argc() == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
+      vim.cmd.cd(vim.fn.fnameescape(vim.fn.fnamemodify(vim.fn.argv(0), ":p:h"))) -- fzf / rg の検索対象も合わせる
+    end
+  end,
+})

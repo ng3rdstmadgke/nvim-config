@@ -1,3 +1,15 @@
+-- netrw のバッファ名は "NetrwTreeListing" 固定なので、ディレクトリのパスで表示する
+local function netrw_dir(bufnr)
+  return vim.fn.getbufvar(bufnr, "netrw_curdir")
+end
+
+local function winbar_filename(str)
+  if vim.bo.filetype ~= "netrw" then
+    return str
+  end
+  return vim.fn.fnamemodify(netrw_dir(vim.api.nvim_get_current_buf()), ":~")
+end
+
 return {
   {
     "folke/tokyonight.nvim",
@@ -17,7 +29,6 @@ return {
         section_separators = "",
         always_show_tabline = false, -- タブが1つのときはタブラインを隠す
         globalstatus = true, -- ステータスラインは画面全体で1本にする
-        disabled_filetypes = { winbar = { "NvimTree" } },
       },
       sections = {
         lualine_c = {},
@@ -26,14 +37,25 @@ return {
       },
       -- ファイル名は各ウィンドウの上端 (winbar) に表示する
       winbar = {
-        lualine_c = { { "filename", path = 1 } },
+        lualine_c = { { "filename", path = 1, fmt = winbar_filename } },
       },
       inactive_winbar = {
-        lualine_c = { { "filename", path = 1 } },
+        lualine_c = { { "filename", path = 1, fmt = winbar_filename } },
       },
       -- 複数タブの管理: タブ番号とファイル名を表示する
       tabline = {
-        lualine_a = { { "tabs", mode = 2, max_length = vim.o.columns } },
+        lualine_a = { {
+          "tabs",
+          mode = 2,
+          max_length = vim.o.columns,
+          fmt = function(name, tab)
+            if tab.filetype == "netrw" then
+              local buf = vim.fn.tabpagebuflist(tab.tabnr)[vim.fn.tabpagewinnr(tab.tabnr)]
+              return vim.fn.fnamemodify(netrw_dir(buf), ":t") .. "/"
+            end
+            return name
+          end,
+        } },
       },
     },
   },
