@@ -69,9 +69,8 @@ map("n", "s", "<Nop>")
 map("n", "sy", "yiw", { desc = "単語をヤンク" })
 map("n", "sp", 'viw"0p', { desc = "単語をヤンクレジスタの内容に置換" })
 map("n", "<Leader>w", function()
-  -- 右端での折り返しの切替 (単語の途中では折り返さない)
+  -- 右端での折り返しの切替 (単語の切れ目は考慮せず、右端でそのまま折り返す)
   vim.wo.wrap = not vim.wo.wrap
-  vim.wo.linebreak = vim.wo.wrap
   vim.notify("wrap: " .. (vim.wo.wrap and "on" or "off"))
 end, { desc = "折り返し表示の切替" })
 map("n", "<Leader>W", "<Cmd>w<CR>", { desc = "保存" })
