@@ -13,7 +13,7 @@ return {
     opts = {
       options = {
         always_show_tabline = false, -- タブが1つのときはタブラインを隠す
-        globalstatus = true,
+        globalstatus = false, -- 分割した各ウィンドウにファイル名を表示する
       },
       sections = {
         lualine_c = { { "filename", path = 1 } },
