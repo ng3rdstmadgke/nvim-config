@@ -26,7 +26,16 @@ lua/plugins/             プラグイン別の設定
 sudo apt install -y git curl tar unzip gcc make ripgrep fzf python3-venv
 ```
 
-Node.js も必要です (pyright, vtsls など多くの LSP が npm 経由で入ります)。nvm などで入れてください。
+Node.js も必要です (pyright, vtsls, prettier など多くのツールが mason から npm 経由で入ります)。nvm で入れて、default に設定します。
+
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash
+source ~/.bashrc
+nvm install 24
+nvm alias default 24
+```
+
+`default` が無効になっていると、新しいシェルに `npm` が入らず、mason のインストールが失敗します。`nvm current` が `none` 以外になっていることを確認してください。
 
 ### 2. Neovim を入れる
 
@@ -42,7 +51,11 @@ rm nvim-linux-x86_64.tar.gz
 
 ### 3. tree-sitter-cli を入れる
 
-treesitter のパーサーのビルドに必要です (npm 版は非対応)。
+treesitter のパーサーのビルドに必要です。0.26.1 以降が必要です (npm 版は非対応)。次のどちらかで入れてください。
+
+#### A. 公式バイナリを入れる (Ubuntu 24.04 以降)
+
+公式バイナリは glibc 2.39 以降を要求します。Ubuntu 22.04 では `GLIBC_2.39' not found` で起動しないので、B を使ってください。
 
 ```bash
 curl -sL https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-x64.gz | gunzip > ~/.local/bin/tree-sitter
@@ -50,6 +63,19 @@ chmod +x ~/.local/bin/tree-sitter
 ```
 
 `~/.local/bin` が `PATH` に入っていることを確認してください。
+
+#### B. Rust でソースからビルドする (Ubuntu 22.04 など glibc が古い環境)
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source ~/.cargo/env
+cargo install --locked tree-sitter-cli
+```
+
+`~/.cargo/bin/tree-sitter` に入ります。A で入れた `~/.local/bin/tree-sitter` が残っていると、そちらが優先されることがあるので削除してください。
+
+
+#### 確認
 
 ```bash
 nvim --version | head -1
