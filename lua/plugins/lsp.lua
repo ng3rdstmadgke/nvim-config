@@ -84,16 +84,15 @@ return {
           local function map(lhs, rhs, desc)
             vim.keymap.set("n", lhs, rhs, { buffer = args.buf, desc = desc })
           end
-          map('<Leader>"', vim.lsp.buf.definition, "定義へ移動")
-          map("<Leader>#", function()
-            -- 定義元を縦分割で開く。定義が無いときは分割しない
+          -- 定義元を分割したウィンドウで開く。定義が無いときは分割しない
+          local function definition_in(split)
             vim.lsp.buf.definition({
               on_list = function(res)
                 local items = res.items
                 if #items == 0 then
                   return
                 end
-                vim.cmd("vsplit " .. vim.fn.fnameescape(items[1].filename))
+                vim.cmd(split .. " " .. vim.fn.fnameescape(items[1].filename))
                 vim.api.nvim_win_set_cursor(0, { items[1].lnum, items[1].col - 1 })
                 if #items > 1 then
                   vim.fn.setqflist({}, " ", res)
@@ -101,7 +100,9 @@ return {
                 end
               end,
             })
-          end, "定義元を縦分割で表示")
+          end
+          map('<Leader>"', function() definition_in("split") end, "定義元を横分割で表示")
+          map("<Leader>#", function() definition_in("vsplit") end, "定義元を縦分割で表示")
           map("gD", vim.lsp.buf.declaration, "宣言へ移動")
           -- 端末によっては <C-/> が <C-_> として届くので両方に割り当てる
           map("<C-/>", vim.lsp.buf.hover, "ホバー")
