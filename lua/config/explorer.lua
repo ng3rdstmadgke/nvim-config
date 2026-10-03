@@ -16,11 +16,6 @@ function M.open()
   M.reveal(file)
 end
 
--- netrw を今のウィンドウに、現在のファイルのディレクトリで開く
-function M.open_file_dir()
-  vim.cmd("Explore")
-end
-
 -- netrw のツリー上で path までフォルダを展開し、その行にカーソルを置く
 function M.reveal(path)
   local top = vim.w.netrw_treetop

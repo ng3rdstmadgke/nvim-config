@@ -30,7 +30,6 @@ map("n", "<C-j>", function() require("config.window").move_border("j") end, { de
 map("n", "<Leader>=", "<C-w>=")
 -- === エクスプローラ (netrw) ===
 map("n", "<Leader>e", function() require("config.explorer").open() end, { desc = "エクスプローラ (プロジェクトルート)" })
-map("n", "<Leader>E", function() require("config.explorer").open_file_dir() end, { desc = "エクスプローラ (現在のファイルのディレクトリ)" })
 map("n", "<Leader>m", function()
   -- エクスプローラを閉じて、直前のバッファへ戻る
   if vim.bo.filetype == "netrw" and vim.fn.buflisted(vim.fn.bufnr("#")) == 1 then
