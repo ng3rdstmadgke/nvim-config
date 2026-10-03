@@ -101,8 +101,9 @@ return {
               end,
             })
           end
-          map('<Leader>"', function() definition_in("split") end, "定義元を横分割で表示")
-          map("<Leader>#", function() definition_in("vsplit") end, "定義元を縦分割で表示")
+          map("<Leader>2", vim.lsp.buf.definition, "定義へ移動")
+          map("<Leader>3", function() definition_in("vsplit") end, "定義元を縦分割で表示")
+          map("<Leader>4", function() definition_in("split") end, "定義元を横分割で表示")
           map("gD", vim.lsp.buf.declaration, "宣言へ移動")
           -- 端末によっては <C-/> が <C-_> として届くので両方に割り当てる
           map("<C-/>", vim.lsp.buf.hover, "ホバー")
