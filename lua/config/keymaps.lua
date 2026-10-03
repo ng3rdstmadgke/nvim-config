@@ -43,8 +43,14 @@ local function new_window(cmd)
   vim.cmd(cmd)
   require("config.explorer").open()
 end
-map("n", "<Leader>s", function() new_window("split") end, { desc = "横に分割" })
-map("n", "<Leader>d", function() new_window("vsplit") end, { desc = "縦に分割" })
+-- 分割したときは、元のペインで開いていたファイルをエクスプローラ上でハイライトする
+local function split_window(cmd)
+  local file = vim.bo.buftype == "" and vim.api.nvim_buf_get_name(0) or ""
+  new_window(cmd)
+  require("config.explorer").reveal(file)
+end
+map("n", "<Leader>s", function() split_window("split") end, { desc = "横に分割" })
+map("n", "<Leader>d", function() split_window("vsplit") end, { desc = "縦に分割" })
 
 -- === タブ ===
 map("n", "<Leader>t", function() new_window("tabnew") end, { desc = "新しいタブ" })
