@@ -103,6 +103,9 @@ return {
             })
           end, "定義元を縦分割で表示")
           map("gD", vim.lsp.buf.declaration, "宣言へ移動")
+          -- 端末によっては <C-/> が <C-_> として届くので両方に割り当てる
+          map("<C-/>", vim.lsp.buf.hover, "ホバー")
+          map("<C-_>", vim.lsp.buf.hover, "ホバー")
           map("<Leader>cd", vim.diagnostic.open_float, "診断の詳細")
           map("<Leader>cr", vim.lsp.buf.rename, "名前変更")
           map("<Leader>ca", vim.lsp.buf.code_action, "コードアクション")
