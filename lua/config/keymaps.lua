@@ -47,10 +47,10 @@ map("n", "<Leader>d", function() new_window("vsplit") end, { desc = "縦に分�
 
 -- === タブ ===
 map("n", "<Leader>t", function() new_window("tabnew") end, { desc = "新しいタブ" })
-map("n", "<Leader><C-n>", "gt", { desc = "次のタブ" })
-map("n", "<Leader><C-p>", "gT", { desc = "前のタブ" })
-map("n", "<Leader>>", "<Cmd>tabmove +1<CR>", { desc = "タブを右へ移動" })
-map("n", "<Leader><", "<Cmd>tabmove -1<CR>", { desc = "タブを左へ移動" })
+map("n", "<Leader>n", "gt", { desc = "次のタブ" })
+map("n", "<Leader>p", "gT", { desc = "前のタブ" })
+map("n", "<Leader><C-n>", "<Cmd>tabmove +1<CR>", { desc = "タブを右へ移動" })
+map("n", "<Leader><C-p>", "<Cmd>tabmove -1<CR>", { desc = "タブを左へ移動" })
 map("n", "<Leader>a", "<C-w>T", { desc = "現在のウィンドウをタブに移動" })
 map("n", "<Leader>x", "<Cmd>tabclose<CR>", { desc = "タブを閉じる" })
 
