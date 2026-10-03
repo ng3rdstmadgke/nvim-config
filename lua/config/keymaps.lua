@@ -72,6 +72,8 @@ map("n", "<Leader>W", "<Cmd>w<CR>", { desc = "保存" })
 map("n", "<Leader>q", "<Cmd>q<CR>", { desc = "閉じる" })
 map("n", "<Leader>o", "<Cmd>qa!<CR>", { desc = "保存せずに全て終了" })
 map("n", "<Esc>", "<Cmd>nohlsearch<CR>", { desc = "検索ハイライトを消す" })
+-- マウスでドラッグして離したら、選択範囲をクリップボードへコピーする (tmux 経由で手元の PC のクリップボードに入る)
+map("x", "<LeftRelease>", '<LeftRelease>"+y', { desc = "ドラッグした範囲をクリップボードへコピー" })
 -- 端末モードから Normal モードへ戻る
 map("t", "<Esc>", "<C-\\><C-n>", { desc = "端末モードを抜ける" })
 -- <C-{> を区別して送れる端末向け (送れない端末では <C-{> が <Esc> と同じ信号になるので上のマップで戻れる)
