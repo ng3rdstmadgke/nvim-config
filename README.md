@@ -138,7 +138,7 @@ LSP サーバーと整形ツールは、手順 4 の初回起動で mason が自
 | キー | 動作 |
 |---|---|
 | `<Leader>ff` | ファイル名で検索 (.gitignore の対象は除外) |
-| `<Leader>fg` | rg で内容検索 (.gitignore の対象は除外) |
+| `<Leader>fg` | rg で内容検索 (.gitignore の対象と `.git/` の中は除外) |
 | `<Leader>fG` | rg で内容検索 (.gitignore を無視。`.git/` の中は除く) |
 | `<Leader>fw` | カーソル下の単語を検索 |
 | `<Leader>fb` / `fo` | バッファ / 最近開いたファイル |
