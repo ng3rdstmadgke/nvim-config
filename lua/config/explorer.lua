@@ -9,9 +9,11 @@ function M.root()
   return vim.fs.root(start, ".git") or vim.fn.getcwd()
 end
 
--- netrw を今のウィンドウに、プロジェクトルートで開く
+-- netrw を今のウィンドウに、プロジェクトルートで開く。直前まで開いていたファイルの行にカーソルを置く
 function M.open()
+  local file = vim.bo.buftype == "" and vim.api.nvim_buf_get_name(0) or ""
   vim.cmd("Explore " .. vim.fn.fnameescape(M.root()))
+  M.reveal(file)
 end
 
 -- netrw を今のウィンドウに、現在のファイルのディレクトリで開く
@@ -20,7 +22,6 @@ function M.open_file_dir()
 end
 
 -- netrw のツリー上で path までフォルダを展開し、その行にカーソルを置く
-
 function M.reveal(path)
   local top = vim.w.netrw_treetop
   if not top or path == "" then
