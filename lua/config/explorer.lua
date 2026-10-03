@@ -19,18 +19,7 @@ function M.open_file_dir()
   vim.cmd("Explore")
 end
 
--- netrw のツリー上で path までフォルダを展開し、その行にカーソルを置いてハイライトする
-local group = vim.api.nvim_create_augroup("user_explorer", { clear = true })
--- ハイライトはウィンドウ単位なので、netrw からファイルを開いたら消す
-vim.api.nvim_create_autocmd("BufWinEnter", {
-  group = group,
-  callback = function()
-    if vim.w.explorer_match and vim.bo.filetype ~= "netrw" then
-      pcall(vim.fn.matchdelete, vim.w.explorer_match)
-      vim.w.explorer_match = nil
-    end
-  end,
-})
+-- netrw のツリー上で path までフォルダを展開し、その行にカーソルを置く
 
 function M.reveal(path)
   local top = vim.w.netrw_treetop
@@ -41,8 +30,6 @@ function M.reveal(path)
   if not rel or rel == "." then
     return
   end
-  -- カラースキームを切り替えると定義が消えるので、毎回設定する
-  vim.api.nvim_set_hl(0, "ExplorerCurrentFile", { link = "Visual", default = true })
   local parts = vim.split(rel, "/", { plain = true })
   local lnum = 1
   for i, name in ipairs(parts) do
@@ -60,12 +47,6 @@ function M.reveal(path)
     if is_dir and not vim.startswith(next_line, string.rep("| ", i + 1)) then
       vim.cmd("normal \r")
       vim.api.nvim_win_set_cursor(0, { lnum, 0 })
-    end
-    if not is_dir then
-      if vim.w.explorer_match then
-        pcall(vim.fn.matchdelete, vim.w.explorer_match)
-      end
-      vim.w.explorer_match = vim.fn.matchadd("ExplorerCurrentFile", pat)
     end
   end
 end

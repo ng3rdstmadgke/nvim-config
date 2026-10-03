@@ -43,7 +43,7 @@ local function new_window(cmd)
   vim.cmd(cmd)
   require("config.explorer").open()
 end
--- 分割したときは、元のペインで開いていたファイルをエクスプローラ上でハイライトする
+-- 分割したときは、元のペインで開いていたファイルの行にエクスプローラのカーソルを置く
 local function split_window(cmd)
   local file = vim.bo.buftype == "" and vim.api.nvim_buf_get_name(0) or ""
   new_window(cmd)
